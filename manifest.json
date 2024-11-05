@@ -1,33 +1,35 @@
 {
-    "browser_action": {
-      "browser_style": true,
-      "default_title": "Ultimate Blocker Extension",
-      "default_popup": "popup/popup.html"
-    },
-  
-    "description": "Blocker",
-    "manifest_version": 2,
-    "name": "Ultimate Blocker Extension",
-    "version": "1.0",
-  
-    "icons": {
-      "16": "icons/16.png",
-      "32": "icons/32.png",
-      "64": "icons/64.png"
-    },
-  
-    "permissions": ["cookies",
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "Ultimate Blocker Extension",
+    "default_popup": "popup/popup.html"
+  },
+  "description": "Blocker",
+  "manifest_version": 2,
+  "name": "Ultimate Blocker Extension",
+  "version": "1.0",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "64": "icons/64.png"
+  },
+  "permissions": [
+    "cookies",
     "<all_urls>",
     "tabs",
     "storage",
     "webRequest",
     "webRequestBlocking",
     "http://*/*",
-    "https://*/*"],
-  
-  
-    "background": {
-      "scripts": ["background.js"]
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/tracker-script.js"]
     }
-  }
-  
+  ]
+}
