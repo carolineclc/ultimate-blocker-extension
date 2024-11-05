@@ -26,12 +26,8 @@
     "https://*/*"],
   
   
-  
-    "content_scripts": [
-      {
-        "matches": ["*://*/*"],
-        "js": ["background.js"]
-      }
-    ]
+    "background": {
+      "scripts": ["background.js"]
+    }
   }
   

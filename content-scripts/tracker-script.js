@@ -16,7 +16,7 @@ function getActiveTab() {
       // Filter lines that are likely to be tracking domains
       const trackers = text
         .split("\n")
-        .filter(line => line.startsWith("||"))
+        .filter(line => (line.endsWith(".com")) || (line.endsWith(".net")))
         .map(line => line.replace("||", "").split("^")[0]);
   
       // Save to storage
