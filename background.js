@@ -1,6 +1,8 @@
 // Log each network request made by the browser
-browser.webRequest.onBeforeRequest.addListener(
-    (details) => {
+browser.webRequest.onBeforeRequest.addListener((details, sendResponse) => {
+        sendResponse({
+            data: details.url
+        });
       console.log("URL:", details.url);
       console.log("Method:", details.method);
     },
