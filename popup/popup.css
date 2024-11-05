@@ -1,0 +1,19 @@
+html, body {
+    width: 720px;
+    max-width: 720px;
+    background-color: #010101;
+    color: #f0f0f0;
+  }
+
+.panel {
+    padding: 20px 10px;
+    background-color: #101010;
+}
+.details-text{
+    font-size: 30px;
+    color: #f0f0f0;
+}
+
+.details-text:hover{
+    color:yellow;
+}
