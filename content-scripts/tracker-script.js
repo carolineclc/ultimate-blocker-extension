@@ -4,8 +4,12 @@ function getActiveTab() {
   });
 }
 
+
+
 async function showTrackersForTab() {
   const trackerList = document.getElementById("trackers");
+  const blockedTrackers = document.getElementById("blocked-count");
+  
   const url = "https://easylist.to/easylist/easylist.txt";
   try {
     const response = await fetch(url);
@@ -18,8 +22,14 @@ async function showTrackersForTab() {
       .filter(line => (line.endsWith(".com")) || (line.endsWith(".net")) ||  (line.endsWith(".nz"))||  (line.endsWith(".de")) ||  (line.endsWith(".pro"))||  (line.endsWith(".in")));
 
     // Save to storage
-    await browser.storage.local.set({ trackers });
+    await browser.storage.local.set({trackers });
     console.log("Trackers updated!");
+
+
+    
+    const blocked_trackers = await browser.storage.local.get("count");
+    console.log(blocked_trackers.count);
+    blockedTrackers.innerHTML = blocked_trackers.count;
 
     if (!trackers || trackers.length === 0) {
       trackerList.innerHTML = "<li>No trackers found.</li>";
@@ -35,5 +45,8 @@ async function showTrackersForTab() {
     console.error("Failed to fetch trackers:", error);
   }
 }
+
+
+
 
 getActiveTab().then(showTrackersForTab);

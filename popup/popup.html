@@ -6,6 +6,13 @@
   </head>
 
   <body>
+    <div class ="header">
+      <div>
+       <h1>Number of trackers blocked</h1> 
+      </div>
+      <h1 id = "blocked-count"></h1>
+    </div>
+    
     <div class="panel">
       <details>
         <summary class = "details-text">List of Trackers</summary>
@@ -13,7 +20,15 @@
       </details>
     </div>
 
+    <div class="panel">
+      <details>
+        <summary class = "details-text">List of blocked domains</summary>
+        <ul id = "blocked-trackers"></ul>
+      </details>
+    </div>
+
   </body>
 
   <script src="../content-scripts/tracker-script.js"></script>
+
 </html>
