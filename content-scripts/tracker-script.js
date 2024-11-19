@@ -14,8 +14,8 @@ async function showTrackersForTab() {
     // Filter lines that are likely to be tracking domains
     const trackers = text
       .split("\n")
-      .filter(line => (line.endsWith(".com")) || (line.endsWith(".net")))
-      .map(line => line.replace("||", "").split("^")[0]);
+      .map(line => line.replace("||", "").replace("^","").split("^")[0])
+      .filter(line => (line.endsWith(".com")) || (line.endsWith(".net")) ||  (line.endsWith(".nz"))||  (line.endsWith(".de")) ||  (line.endsWith(".pro"))||  (line.endsWith(".in")));
 
     // Save to storage
     await browser.storage.local.set({ trackers });

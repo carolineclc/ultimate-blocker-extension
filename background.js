@@ -18,3 +18,5 @@ function isTracker(url, trackers) {
   const urlObj = new URL(url);
   return trackers.some(tracker => urlObj.hostname.includes(tracker));
 }
+
+
