@@ -14,6 +14,8 @@ browser.webRequest.onBeforeRequest.addListener(
     browser.tabs.onActivated.addListener(handleActivated);
     const { trackers } = await browser.storage.local.get("trackers");
     if (trackers && isTracker(details.url, trackers)) {
+      const blockedTracker = trackers;
+      await browser.storage.local.set({blockedTracker});
       //console.log("Bloqueando URL:", details.url);
       count++;
 
@@ -35,3 +37,25 @@ function isTracker(url, trackers) {
   const urlObj = new URL(url);
   return trackers.some(tracker => urlObj.hostname.includes(tracker));
 }
+
+
+async function update(){
+  console.log("Updating...");
+  const blockedCount = document.getElementById("blocked-count");
+  const blocked_trackers_count = await browser.storage.local.get("count");
+
+  if (!blocked_trackers_count.count || blocked_trackers_count.count.length === 0) {
+
+    blockedCount.innerHTML = 0;
+  } else {
+    console.log(blocked_trackers_count.count);
+    blockedCount.innerHTML = blocked_trackers_count.count;
+  }
+
+}
+
+// Update the list every 3 seconds
+setInterval(update, 3000);
+
+// Initial update
+update();

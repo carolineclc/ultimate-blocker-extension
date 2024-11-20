@@ -12,6 +12,9 @@
       </div>
       <h1 id = "blocked-count"></h1>
     </div>
+
+
+    <button id="deleteButton">Delete List</button>
     
     <div class="panel">
       <details>
@@ -22,7 +25,7 @@
 
     <div class="panel">
       <details>
-        <summary class = "details-text">List of blocked domains</summary>
+        <summary class = "details-text">List of blocked trackers</summary>
         <ul id = "blocked-trackers"></ul>
       </details>
     </div>
@@ -30,5 +33,6 @@
   </body>
 
   <script src="../content-scripts/tracker-script.js"></script>
+  <script src="../background.js"></script>
 
 </html>

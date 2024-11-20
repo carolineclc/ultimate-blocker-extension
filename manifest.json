@@ -32,4 +32,5 @@
       "js": ["content-scripts/tracker-script.js"]
     }
   ]
+
 }
