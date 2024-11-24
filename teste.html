@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AdGuard Test</title>
+</head>
+<body>
+  <h1>Testing AdGuard Blocklist</h1>
+  <script>
+    const trackers = [
+      "https://ad.doubleclick.net",
+      "https://analytics.adguard.com",
+      "https://track.adserver.com"
+    ];
+
+    trackers.forEach(url => {
+      fetch(url)
+        .then(() => console.log(`Allowed: ${url}`))
+        .catch(() => console.error(`Blocked: ${url}`));
+    });
+  </script>
+</body>
+</html>

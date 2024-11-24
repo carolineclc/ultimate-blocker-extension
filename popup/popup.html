@@ -2,38 +2,44 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel ="stylesheet" type="text/css" href="../popup/popup.css">
+    <link rel="stylesheet" type="text/css" href="../popup/popup.css">
   </head>
-
   <body>
-    <div class ="header">
+    <div class="header">
       <div>
-       <h1>Number of trackers blocked</h1> 
+        <h1>Number of trackers blocked</h1>
       </div>
-      <h1 id = "blocked-count"></h1>
+      <h1 id="blocked-count"></h1>
     </div>
-
 
     <button id="deleteButton">Delete List</button>
-    
+
     <div class="panel">
       <details>
-        <summary class = "details-text">List of Trackers</summary>
-        <ul id = "trackers"></ul>
+        <summary class="details-text">List of Trackers</summary>
+        <ul id="trackers"></ul>
       </details>
     </div>
 
     <div class="panel">
       <details>
-        <summary class = "details-text">List of blocked trackers</summary>
-        <ul id = "blocked-trackers"></ul>
+        <summary class="details-text">List of Blocked Trackers</summary>
+        <ul id="blocked-trackers"></ul>
       </details>
     </div>
 
+    <div class="panel">
+      <details>
+        <summary class="details-text">Manage Tracking Lists</summary>
+        <ul id="tracking-lists"></ul>
+        <input id="new-list-url" type="text" placeholder="Enter list URL (e.g., https://example.com/list.txt)" />
+        <button id="add-list">Add List</button>
+      </details>
+    </div>
+
+    <!-- Scripts originais mantidos -->
+    <script src="../content-scripts/tracker-script.js"></script>
+    <script src="../background.js"></script>
+    <script src="../popup/popup.js"></script>
   </body>
-
-  <script src="../content-scripts/tracker-script.js"></script>
-  <script src="../background.js"></script>
-  <script src="../popup/popup.js"></script>
-
 </html>
