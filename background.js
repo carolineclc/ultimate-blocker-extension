@@ -1,49 +1,58 @@
 let count = 0;
 let blockedTrackers = [];
 
-// Changeing the count to 0 when the tab is changed
-function handleActivated(activeInfo) {
+function handleActivated() {
   count = 0;
   blockedTrackers = [];
-  browser.storage.local.set({count});
-  console.log("tab has been swithed");
+  browser.storage.local.set({ count });
+  console.log("Tab has been switched");
 }
 
-
-// Listen for network requests
 browser.webRequest.onBeforeRequest.addListener(
   async (details) => {
-
     browser.tabs.onActivated.addListener(handleActivated);
-    const { trackers } = await browser.storage.local.get("trackers");
 
-    if (trackers && isTracker(details.url, trackers)) {
+    const { lists = [] } = await browser.storage.local.get("lists");
+    const activeLists = lists.filter(list => list.active !== false);
 
-      blockedTrackers.push(details.url);
-      
-      console.log("Bloqueando URL:", details.url);
-      count++;
-      //console.log("teste");
-      return { cancel: true };
+    const urlObj = new URL(details.url);
+    for (const list of activeLists) {
+      if (list.domains.some(domain => urlObj.hostname.includes(domain))) {
+        blockedTrackers.push(details.url);
+        console.log(`Blocking URL: ${details.url} (Blocked by: ${list.name || list.url})`);
+        count++;
+        return { cancel: true };
+      }
     }
-    //console.log("Permitindo URL:", details.url);
+
     return { cancel: false };
   },
-  { urls: ["<all_urls>"] },  // Filters: apply to all URLs
+  { urls: ["<all_urls>"] },
   ["blocking"]
 );
 
-// Verificar se o domínio está na lista de rastreadores
-function isTracker(url, trackers) {
-  const urlObj = new URL(url);
-  return trackers.some(tracker => urlObj.hostname.includes(tracker));
-}
-
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  
   if (message.action === "getBlockedTrackers") {
-    console.log(blockedTrackers.length);
-    sendResponse({count : blockedTrackers.length, blockedTrackers: blockedTrackers})
+    sendResponse({ count: blockedTrackers.length, blockedTrackers });
   }
 });
 
+// Inicializar listas padrão
+browser.runtime.onInstalled.addListener(async () => {
+  const { lists = [] } = await browser.storage.local.get("lists");
+  if (!lists.some(list => list.name === "EasyList")) {
+    try {
+      const response = await fetch("https://easylist.to/easylist/easylist.txt");
+      const text = await response.text();
+      const domains = text
+        .split("\n")
+        .map(line => line.replace("||", "").replace("^", "").split("^")[0])
+        .filter(line => line.endsWith(".com") || line.endsWith(".net"));
+
+      lists.push({ name: "EasyList", domains, active: true });
+      await browser.storage.local.set({ lists });
+    } catch (error) {
+      console.error("Failed to fetch EasyList:", error);
+    }
+  }
+});
